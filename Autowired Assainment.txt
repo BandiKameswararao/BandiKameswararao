@@ -1,0 +1,857 @@
+package com.zensar.spring_core_demo;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.zensar.beans.Address;
+import com.zensar.beans.Employee;
+import com.zensar.beans.Product;
+import com.zensar.beans.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	ApplicationContext context=new ClassPathXmlApplicationContext("contex.xml");
+
+
+    	Employee employee=context.getBean("employee",Employee.class );
+
+    	System.out.println(employee); 
+ 24  
+Bandi Kameswara Rao/Autowired/Context.java
+@@ -0,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd 
+ http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+<context:annotation-config></context:annotation-config>
+
+<bean id="employee" class="com.zensar.beans.Employee" autowire="byType">
+  <property name="employeeId" value="1"></property>
+  <property name="employeeName" value="vijay"></property>
+
+</bean>
+
+ <bean id="department" class="com.zensar.beans.Department">
+   <property name="departmentCode" value="11"></property>
+   <property name="departmentRole" value="devloper"></property>
+
+
+ </bean>
+</bean> 
+ 41  
+Kameswara Rao/Autowired/Department.java
+@@ -0,0 +1,41 @@
+package com.zensar.beans;
+
+public class Department {
+
+	private int departmentCode;
+	private String departmentRole;
+
+	public Department() {
+		super();
+	}
+
+	public Department(int departmentCode, String departmentRole) {
+		super();
+		this.departmentCode = departmentCode;
+		this.departmentRole = departmentRole;
+	}
+
+	public int getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public void setDepartmentCode(int departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+
+	public String getDepartmentRole() {
+		return departmentRole;
+	}
+
+	public void setDepartmentRole(String departmentRole) {
+		this.departmentRole = departmentRole;
+	}
+
+	@Override
+	public String toString() {
+		return "Department [departmentCode=" + departmentCode + ", departmentRole=" + departmentRole + "]";
+	}
+
+
+
+} 
+ 68 
+Kameswara Rao/Autowired/Employee.java
+@@ -0,0 +1,68 @@
+package com.zensar.beans;
+
+public class Employee {
+
+	private int employeeId;
+	private String employeeName;
+
+
+	@Autowired
+	private Department department;
+
+	public Employee() {
+		super();
+	}
+
+
+
+	public Employee(Department department) {
+		super();
+		this.department = department;
+	}
+
+
+
+	public Employee(int employeeId, String employeeNamee) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+
+	}
+
+
+
+	public Department getDepartment() {
+		return department;
+	}
+
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", department=" + department
+				+ "]";
+	}
+
+
+
+
+} 
+ 29  
+Kameswara Rao/Qualifiler Annotation/App.java
+@@ -0,0 +1,29 @@
+package com.zensar.spring_core_demo;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.zensar.beans.Address;
+import com.zensar.beans.Employee;
+import com.zensar.beans.Product;
+import com.zensar.beans.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	ApplicationContext context=new ClassPathXmlApplicationContext("contex.xml");
+
+
+    	Employee employee=context.getBean("employee",Employee.class );
+
+    	System.out.println(employee);
+
+
+Output:
+Employee [employeeId=1, employeeName=vijay, department=Department [departmentCode=11, departmentRole=devloper]] 
+ 24  
+Bandi Kameswara Rao/Qualifiler Annotation/Context.java
+@@ -0,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd 
+ http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+<context:annotation-config></context:annotation-config>
+
+<bean id="employee" class="com.zensar.beans.Employee" autowire="byType">
+  <property name="employeeId" value="1"></property>
+  <property name="employeeName" value="vijay"></property>
+
+</bean>
+
+ <bean id="department" class="com.zensar.beans.Department">
+   <property name="departmentCode" value="11"></property>
+   <property name="departmentRole" value="devloper"></property>
+
+
+ </bean>
+</bean> 
+ 41  
+Bandi Kameswara Rao/Qualifiler Annotation/Department.java
+@@ -0,0 +1,41 @@
+package com.zensar.beans;
+
+public class Department {
+
+	private int departmentCode;
+	private String departmentRole;
+
+	public Department() {
+		super();
+	}
+
+	public Department(int departmentCode, String departmentRole) {
+		super();
+		this.departmentCode = departmentCode;
+		this.departmentRole = departmentRole;
+	}
+
+	public int getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public void setDepartmentCode(int departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+
+	public String getDepartmentRole() {
+		return departmentRole;
+	}
+
+	public void setDepartmentRole(String departmentRole) {
+		this.departmentRole = departmentRole;
+	}
+
+	@Override
+	public String toString() {
+		return "Department [departmentCode=" + departmentCode + ", departmentRole=" + departmentRole + "]";
+	}
+
+
+
+} 
+ 69  
+Bandi Kameswara Rao/Qualifiler Annotation/Employee,java.txt
+@@ -0,0 +1,69 @@
+package com.zensar.beans;
+
+public class Employee {
+
+	private int employeeId;
+	private String employeeName;
+
+
+	@Autowired
+        @Qualifier("department")
+	private Department department;
+
+	public Employee() {
+		super();
+	}
+
+
+
+	public Employee(Department department) {
+		super();
+		this.department = department;
+	}
+
+
+
+	public Employee(int employeeId, String employeeNamee) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+
+	}
+
+
+
+	public Department getDepartment() {
+		return department;
+	}
+
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", department=" + department
+				+ "]";
+	}
+
+
+
+
+}
+ 25
+Bandi/byConstructor/App.java_constructor.txt
+@@ -0,0 +1,25 @@
+package com.zensar.spring_core_demo;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.zensar.beans.Address;
+import com.zensar.beans.Employee;
+import com.zensar.beans.Product;
+import com.zensar.beans.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	ApplicationContext context=new ClassPathXmlApplicationContext("contex.xml");
+
+
+    	Employee employee=context.getBean("employee",Employee.class );
+
+    	System.out.println(employee);
+ 41  
+Bandi Kameswara Rao/byConstructor/Department.java
+@@ -0,0 +1,41 @@
+package com.zensar.beans;
+
+public class Department {
+
+	private int departmentCode;
+	private String departmentRole;
+
+	public Department() {
+		super();
+	}
+
+	public Department(int departmentCode, String departmentRole) {
+		super();
+		this.departmentCode = departmentCode;
+		this.departmentRole = departmentRole;
+	}
+
+	public int getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public void setDepartmentCode(int departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+
+	public String getDepartmentRole() {
+		return departmentRole;
+	}
+
+	public void setDepartmentRole(String departmentRole) {
+		this.departmentRole = departmentRole;
+	}
+
+	@Override
+	public String toString() {
+		return "Department [departmentCode=" + departmentCode + ", departmentRole=" + departmentRole + "]";
+	}
+
+
+
+} 35
+ Bandi Kameswara Rao/byConstructor/Employee.java
+@@ -0,0 +1,68 @@
+package com.zensar.beans;
+
+public class Employee {
+
+	private int employeeId;
+	private String employeeName;
+
+
+	@Autowired
+	private Department department;
+
+	public Employee() {
+		super();
+	}
+
+
+
+	public Employee(Department department) {
+		super();
+		this.department = department;
+	}
+
+
+
+	public Employee(int employeeId, String employeeNamee) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+
+	}
+
+
+
+	public Department getDepartment() {
+		return department;
+	}
+
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", department=" + department
+				+ "]";
+	}
+
+
+
+
+} 
+ 23  
+Kameswara Rao/byConstructor/context.java
+@@ -0,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd 
+ http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+
+<bean id="employee" class="com.zensar.beans.Employee" autowire="constructor">
+  <property name="employeeId" value="1"></property>
+  <property name="employeeName" value="vijay"></property>
+
+</bean>
+
+ <bean id="department" class="com.zensar.beans.Department">
+   <property name="departmentCode" value="11"></property>
+   <property name="departmentRole" value="devloper"></property>
+
+
+ </bean>
+</bean> 
+ 29  
+Bandi Kameswara Rao/byName/App.java
+@@ -0,0 +1,29 @@
+package com.zensar.spring_core_demo;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.zensar.beans.Address;
+import com.zensar.beans.Employee;
+import com.zensar.beans.Product;
+import com.zensar.beans.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	ApplicationContext context=new ClassPathXmlApplicationContext("contex.xml");
+
+
+    	Employee employee=context.getBean("employee",Employee.class );
+
+    	System.out.println(employee);
+
+
+Output:
+Employee [employeeId=1, employeeName=vijay, department=Department [departmentCode=11, departmentRole=devloper]] 
+ 24  
+Kameswara Rao/byName/Context.txt
+@@ -0,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd 
+ http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+<context:annotation-config></context:annotation-config>
+
+<bean id="employee" class="com.zensar.beans.Employee" autowire="byName">
+  <property name="employeeId" value="1"></property>
+  <property name="employeeName" value="vijay"></property>
+
+</bean>
+
+ <bean id="department" class="com.zensar.beans.Department">
+   <property name="departmentCode" value="11"></property>
+   <property name="departmentRole" value="devloper"></property>
+
+
+ </bean>
+</bean>
+ 45
+Bandi Kameswara Rao/byName/Department.java
+@@ -0,0 +1,41 @@
+package com.zensar.beans;
+
+public class Department {
+
+	private int departmentCode;
+	private String departmentRole;
+
+	public Department() {
+		super();
+	}
+
+	public Department(int departmentCode, String departmentRole) {
+		super();
+		this.departmentCode = departmentCode;
+		this.departmentRole = departmentRole;
+	}
+
+	public int getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public void setDepartmentCode(int departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+
+	public String getDepartmentRole() {
+		return departmentRole;
+	}
+
+	public void setDepartmentRole(String departmentRole) {
+		this.departmentRole = departmentRole;
+	}
+
+	@Override
+	public String toString() {
+		return "Department [departmentCode=" + departmentCode + ", departmentRole=" + departmentRole + "]";
+	}
+
+
+
+} 
+ 68  
+Bandi Kameswara rao/byName/Employee.java
+@@ -0,0 +1,68 @@
+package com.zensar.beans;
+
+public class Employee {
+
+	private int employeeId;
+	private String employeeName;
+
+
+	@Autowired
+	private Department department;
+
+	public Employee() {
+		super();
+	}
+
+
+
+	public Employee(Department department) {
+		super();
+		this.department = department;
+	}
+
+
+
+	public Employee(int employeeId, String employeeNamee) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+
+	}
+
+
+
+	public Department getDepartment() {
+		return department;
+	}
+
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", department=" + department
+				+ "]";
+	}
+
+
+
+
+} 
+ 23  
+Bandi Kameswara Rao/byType/Context.txt
+@@ -0,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd 
+ http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+<bean id="employee" class="com.zensar.beans.Employee" autowire="byType">
+  <property name="employeeId" value="1"></property>
+  <property name="employeeName" value="vijay"></property>
+
+</bean>
+
+ <bean id="department" class="com.zensar.beans.Department">
+   <property name="departmentCode" value="11"></property>
+   <property name="departmentRole" value="devloper"></property>
+
+
+ </bean>
+</bean>
+
+ 41  
+Bandi Kameswara Rao/byType/Department.java.txt
+@@ -0,0 +1,41 @@
+package com.zensar.beans;
+
+public class Department {
+
+	private int departmentCode;
+	private String departmentRole;
+
+	public Department() {
+		super();
+	}
+
+	public Department(int departmentCode, String departmentRole) {
+		super();
+		this.departmentCode = departmentCode;
+		this.departmentRole = departmentRole;
+	}
+
+	public int getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public void setDepartmentCode(int departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+
+	public String getDepartmentRole() {
+		return departmentRole;
+	}
+
+	public void setDepartmentRole(String departmentRole) {
+		this.departmentRole = departmentRole;
+	}
+
+	@Override
+	public String toString() {
+		return "Department [departmentCode=" + departmentCode + ", departmentRole=" + departmentRole + "]";
+	}
+
+
+
+}
+ 68  
+Bandi Kameswara Rao/byType/Employee.java.txt
+@@ -0,0 +1,68 @@
+package com.zensar.beans;
+
+public class Employee {
+
+	private int employeeId;
+	private String employeeName;
+
+
+
+	private Department department;
+
+	public Employee() {
+		super();
+	}
+
+
+
+	public Employee(Department department) {
+		super();
+		this.department = department;
+	}
+
+
+
+	public Employee(int employeeId, String employeeNamee) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+
+	}
+
+
+
+	public Department getDepartment() {
+		return department;
+	}
+
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", department=" + department
+				+ "]";
+	}
+
+
+
+
+}
+ 29  
+Bandi Kameswara Rao/byType/app.java.txt
+@@ -0,0 +1,29 @@
+package com.zensar.spring_core_demo;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.zensar.beans.Address;
+import com.zensar.beans.Employee;
+import com.zensar.beans.Product;
+import com.zensar.beans.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	ApplicationContext context=new ClassPathXmlApplicationContext("contex.xml");
+
+
+    	Employee employee=context.getBean("employee",Employee.class );
+
+    	System.out.println(employee);
+
+
+Output:
+Employee [employeeId=1, employeeName=vijay, department=Department [departmentCode=11, departmentRole=devloper]]
