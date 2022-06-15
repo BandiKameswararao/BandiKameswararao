@@ -1,0 +1,35 @@
+zensar.entity;
+
+public class Product {
+
+private int prodId;
+private String p com.rodName;
+
+
+@Override
+public String toString() {
+	return "Product [prodId=" + prodId + ", prodName=" + prodName + "]";
+}
+package
+
+public Product(int prodId, String prodName) {
+	super();package com.zensar.client;
+
+import com.zensar.entity.Product;
+
+public class client {
+
+	public static void main(String[] args) {
+
+		Product Product=new Product(1,"dhoni");
+		
+		
+		System.out.println(Product.getProdName());
+	}
+
+}
+
+
+OUTPUT;
+
+Dhoni
