@@ -1,0 +1,45 @@
+@RestController
+public class Controller {
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity main() {
+        clientRepository.save(new Client(1, 22, "David", "StackAbuse"));
+        clientRepository.save(new Client(2, 34, "John", "StackAbuse"));
+        clientRepository.save(new Client(3, 46, "Melissa", "StackAbuse"));
+
+        Pageable pageRequest = PageRequest.of(0, 10, Sort.by("age").descending());
+
+        Page<Client> clientPage = clientRepository.findByOrganization("StackAbuse", pageRequest);
+
+        List<Client> clientList = clientPage.getContent();
+        int pageNum = clientPage.getNumber();
+        long numOfClients = clientPage.getTotalElements();
+        long totalNumOfPages = clientPage.getTotalPages();
+
+        return ResponseEntity.ok(
+                String.format("Clients: %s, \nCurrent page: %s out of %s, \nTotal entities: %s", 
+                clientList, 
+                pageNum, 
+                totalNumOfPages, 
+                numOfClients));
+    }
+
+
+
+
+/ #{#entityName} resolves to "client_entity"
+@Entity(name = "client_entity")
+public class Client {}
+
+// #{#entityName} resolves to "Client"
+@Entity()
+public class Client {}
+
+
+public interface ClientRepository extends JpaRepository<Client, Long> {     
+    @Query("select e from #{#entityName} e where e.name = ?1")     
+    List<Client> findByName(String name);
+}
