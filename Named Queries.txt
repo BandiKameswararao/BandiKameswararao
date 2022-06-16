@@ -1,0 +1,8 @@
+
+2
+3
+4
+@Entity
+@NamedQuery(name = "Kame.findByFirstName", query = "FROM Kame WHERE firstName = ?1")
+@NamedQuery(name = "Kame.findByFirstNameAndLastName", query = "SELECT a FROM Kame a WHERE a.firstName = ?1 AND a.lastName = ?2")
+public class Kame { ... }
