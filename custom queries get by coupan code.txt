@@ -1,17 +1,13 @@
- public String kameRandomCode(int codeLength){   
-     char[] chars = "Bandi kameswarao1234567890".toCharArray();
-        StringBuilder sb = new StringBuilder();
-        Random random = new SecureRandom();
-        for (int i = 0; i < codeLength; i++) {
-            char c = chars[random.nextInt(chars.length)];
-            sb.append(c);
-        }
-        String output = sb.toString();
-        System.out.println(output);
-        return output ;
-    }
+foreach( $order->get_used_coupons() as $coupon_code ){
+by:
 
+foreach( $order->get_coupon_codes() as $coupon_code ){
+Then you can get coupon details like:
 
-Output;
+foreach( $order->get_coupon_codes() as $coupon_code ) {
+    // Get the WC_Coupon object
+    $coupon = new WC_Coupon($coupon_code);
 
-25
+    $discount_type = $coupon->get_discount_type(); // Get coupon discount type
+    $coupon_amount = $coupon->get_amount(); // Get coupon amount
+}
