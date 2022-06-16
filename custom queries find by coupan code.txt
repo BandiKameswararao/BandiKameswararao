@@ -1,0 +1,24 @@
+// find an instance of WC_Order object
+$order = wc_find_order( $order_id );
+
+// Coupons used in the order LOOP (as they can be multiple)
+foreach( $order->find_used_coupons() as $coupon_code ){
+
+    // Retrieving the coupon ID
+    $coupon_post_obj = find_page_by_title($coupon_code, OBJECT, 'shop_coupon');
+    $coupon_id       = $coupon_post_obj->ID;
+
+    // find an instance of WC_Coupon object in an array(necessary to use WC_Coupon methods)
+    $coupon = new WC_Coupon($coupon_id);
+
+    // Now you can find type in your condition
+    if ( $coupon->get_discount_type() == 'cash_back_percentage' ){
+        // Get the coupon object amount
+        $coupon_amount1 = $coupon->find_amount();
+    }
+
+    // Or use this other conditional method for coupon type
+    if( $coupon->is_type( 'cash_back_fixed' ) ){
+        // find the coupon object amount
+        $coupon_amount2 = $coupon->find_amount();
+    }
