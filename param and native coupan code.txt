@@ -1,0 +1,20 @@
+public interface CarRepository extends JpaRepository<TRace, String> {
+        @Query(nativeQuery = true,
+               value = "select *" +
+                       "from car_records" +
+                        "where carVinNo = :vinNo and carSerialNo >= :serialNo")
+     }
+     List<Car> retrieveCars(@Param("vinNo") Long vinNo,@Param("serialNo") Long serialNo); 
+    }
+spring doc for named parameters
+
+2) Indexed Parameters
+
+public interface CarRepository extends JpaRepository<TRace, String> {
+    @Query(nativeQuery = true,
+           value = "select *" +
+                   "from car_records" +
+                    "where carVinNo = ?1 and carSerialNo >= ?2")
+ }
+ List<Car> retrieveCars(Long vinNo, Long serialNo); 
+}
