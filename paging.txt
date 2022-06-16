@@ -1,0 +1,24 @@
+interface MovieCharacterRepository 
+        extends CrudRepository<MovieCharacter, Long> {
+
+  List<MovieCharacter> findByMovie(String movieName, Pageable pageable);
+  
+  @Query("select c from MovieCharacter c where c.movie = :movie")
+  List<MovieCharacter> findByMovieCustom(
+      @Param("movie") String movieName, Pageable pageable);
+  
+  @Query("select c from MovieCharacter c where c.movie = :movie")
+  List<MovieCharacter> findByMovieSorted(
+      @Param("movie") String movieName, Sort sort);
+
+
+
+
+interface MovieCharacterRepository 
+        extends CrudRepository<MovieCharacter, Long> {
+
+  Page<MovieCharacter> findByMovie(String movieName, Pageable pageable);
+
+  @Query("select c from MovieCharacter c where c.movie = :movie")
+  Slice<MovieCharacter> findByMovieCustom(
+      @Param("movie") String movieName, Pageable pageable);
